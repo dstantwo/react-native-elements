@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import {
   ActivityIndicator,
+  TouchableOpacity,
   View,
   StyleSheet,
   TextInput,
@@ -85,7 +86,7 @@ class Search extends Component {
             inputStyle && inputStyle,
             clearIcon && showLoadingIcon && { paddingRight: 50 },
             ((clearIcon && !showLoadingIcon) ||
-              (!clearIcon && showLoadingIcon)) && { paddingRight: 30 },
+              (!clearIcon && showLoadingIcon)) && { paddingRight: 50 },
           ]}
         />
         {!noIcon &&
@@ -96,17 +97,25 @@ class Search extends Component {
             color={icon.color || colors.grey3}
           />}
         {clearIcon &&
-          <Icon
-            size={16}
+          <TouchableOpacity
+            hitSlop={{top: 15, bottom: 15, left: 30, right: 15}}
+            onPress={this.clearText.bind(this)}
             style={[
               styles.icon,
               styles.clearIcon,
               clearIcon.style && clearIcon.style,
             ]}
-            name={clearIcon.name || 'close'}
-            onPress={this.clearText.bind(this)}
-            color={clearIcon.color || colors.grey3}
-          />}
+          >
+            <Icon
+              size={16}
+              style={[
+                clearIcon.style && clearIcon.style,
+              ]}
+              name={clearIcon.name || 'close'}
+
+              color={clearIcon.color || colors.grey3}
+            />
+          </TouchableOpacity>}
         {showLoadingIcon &&
           <ActivityIndicator
             style={[
